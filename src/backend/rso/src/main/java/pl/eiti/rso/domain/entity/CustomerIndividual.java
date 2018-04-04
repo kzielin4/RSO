@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "CUSTOMER")
-@DiscriminatorColumn(name = "CUSTOMER_TYPE", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("INDIVIDUAL")
 public class CustomerIndividual extends Customer {
 

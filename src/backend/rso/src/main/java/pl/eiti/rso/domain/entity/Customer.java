@@ -4,9 +4,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 
-@MappedSuperclass
+@Entity
+@Table(name = "CUSTOMER")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "CUSTOMER_TYPE", discriminatorType = DiscriminatorType.STRING)
 public abstract class Customer implements Serializable {
 
+    Long id;
     protected Address deliveryAddress;
     protected Address invoiceAddress;
     protected String phoneNo;
@@ -14,6 +18,17 @@ public abstract class Customer implements Serializable {
 
 
     public Customer() {
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", updatable = false, nullable = false)
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -4,8 +4,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "CUSTOMER")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "CUSTOMER_TYPE", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("BUSINESS")
 public class CustomerBusiness extends Customer {
 

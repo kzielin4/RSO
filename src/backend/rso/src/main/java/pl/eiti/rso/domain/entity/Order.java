@@ -3,6 +3,7 @@ package pl.eiti.rso.domain.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "ORDER")
@@ -22,6 +23,8 @@ public class Order {
     BigDecimal productPrice;
     String invoiceNo;
     Date invoideDate;
+
+    List<Product> orderProducts;
 
     public Order() {
     }
@@ -162,5 +165,19 @@ public class Order {
 
     public void setInvoideDate(Date invoideDate) {
         this.invoideDate = invoideDate;
+    }
+
+    @OneToMany
+    @JoinTable(
+            name = "ORDER_PRODUCT",
+            joinColumns = {@JoinColumn(name = "ORDER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")}
+    )
+    public List<Product> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(List<Product> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 }
