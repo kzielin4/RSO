@@ -18,15 +18,15 @@ package pl.eiti.rso.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import pl.eiti.rso.domain.repositories.UserRepository;
+import pl.eiti.rso.domain.repositories.DiscountCodeRepository;
 
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
-	private final UserRepository repository;
+    private final DiscountCodeRepository repository;
 
 	@Autowired
-	public DatabaseLoader(UserRepository repository) {
+    public DatabaseLoader(DiscountCodeRepository repository) {
 		this.repository = repository;
 	}
 

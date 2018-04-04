@@ -24,8 +24,8 @@ import pl.eiti.rso.domain.entity.Address;
 import pl.eiti.rso.domain.entity.CustomerBusiness;
 import pl.eiti.rso.domain.entity.CustomerIndividual;
 import pl.eiti.rso.domain.entity.DiscountCode;
+import pl.eiti.rso.domain.repositories.DiscountCodeRepository;
 import pl.eiti.rso.domain.repositories.HibernateDaoImpl;
-import pl.eiti.rso.domain.repositories.UserRepository;
 
 import javax.transaction.Transactional;
 
@@ -34,7 +34,7 @@ import javax.transaction.Transactional;
 public class DiscountCodeController {
 
 	@Autowired
-	private UserRepository repository;
+	private DiscountCodeRepository repository;
 
 	@Autowired
 	private HibernateDaoImpl hibernateDao;
@@ -76,5 +76,9 @@ public class DiscountCodeController {
 
 	public void setHibernateDao(HibernateDaoImpl hibernateDao) {
 		this.hibernateDao = hibernateDao;
+	}
+
+	public void setRepository(DiscountCodeRepository repository) {
+		this.repository = repository;
 	}
 }

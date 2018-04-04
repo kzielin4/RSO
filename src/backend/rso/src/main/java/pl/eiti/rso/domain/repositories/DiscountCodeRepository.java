@@ -18,6 +18,6 @@ package pl.eiti.rso.domain.repositories;
 import org.springframework.data.repository.CrudRepository;
 import pl.eiti.rso.domain.entity.DiscountCode;
 
-public interface UserRepository extends CrudRepository<DiscountCode, Long> {
+public interface DiscountCodeRepository extends CrudRepository<DiscountCode, Long> {
 
 }
