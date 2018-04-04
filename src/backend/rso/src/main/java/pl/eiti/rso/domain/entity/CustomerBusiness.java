@@ -11,6 +11,7 @@ public class CustomerBusiness extends Customer {
 
     Long id;
     String companyName;
+    String nip;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +31,14 @@ public class CustomerBusiness extends Customer {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    @Column(name = "NIP")
+    public String getNip() {
+        return nip;
+    }
+
+    public void setNip(String nip) {
+        this.nip = nip;
     }
 }

@@ -10,6 +10,8 @@ public class CustomerIndividual extends Customer {
 
     Long id;
     String firstName;
+    String surname;
+    String pesel;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +31,23 @@ public class CustomerIndividual extends Customer {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    @Column(name = "SURNAME")
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    @Column(name = "PESEL")
+    public String getPesel() {
+        return pesel;
+    }
+
+    public void setPesel(String pesel) {
+        this.pesel = pesel;
     }
 }
