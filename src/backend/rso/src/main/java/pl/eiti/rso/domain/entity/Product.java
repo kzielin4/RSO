@@ -13,6 +13,7 @@ public class Product {
     String productNo;
     BigDecimal productPrice;
     Boolean isInSpecialOffer;
+    String name;
 
     public Product() {
     }
@@ -81,5 +82,25 @@ public class Product {
 
     public void setInSpecialOffer(Boolean inSpecialOffer) {
         isInSpecialOffer = inSpecialOffer;
+    }
+
+    @Column(name = "NAME")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Product(Long id, String productType, ProductCategory productCategory, String description, String productNo, BigDecimal productPrice, Boolean isInSpecialOffer, String name) {
+        this.id = id;
+        this.productType = productType;
+        this.productCategory = productCategory;
+        this.description = description;
+        this.productNo = productNo;
+        this.productPrice = productPrice;
+        this.isInSpecialOffer = isInSpecialOffer;
+        this.name = name;
     }
 }
