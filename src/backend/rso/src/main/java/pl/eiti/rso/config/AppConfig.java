@@ -34,11 +34,13 @@ public class AppConfig {
 
     //https://www.techrepublic.com/article/how-to-set-up-mysql-for-remote-access-on-ubuntu-server-16-04/
     //GRANT ALL ON db.* TO 'root'@'localhost' IDENTIFIED BY 'rootrootR$1' WITH GRANT OPTION;
+    //to można dodać TO 'user'@'%' zamiast localhost
+    
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:MySql://127.0.0.1:3306/ESHOP");
+        dataSource.setUrl("jdbc:MySql://192.168.1.20:3306/ESHOP");
         //dataSource.setUrl("jdbc:MySql://ip:3306/SURVEYS");
         //dataSource.setUrl("jdbc:MySql://localhost:3306/SURVEYS");
         dataSource.setUsername( "root" );

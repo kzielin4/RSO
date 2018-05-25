@@ -1,4 +1,4 @@
-package hello;
+package pl.eiti.auth.config;
 
 import javax.sql.DataSource;
 
@@ -42,5 +42,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		  .csrf();
 	}
+
 	
 }

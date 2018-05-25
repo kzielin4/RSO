@@ -64,8 +64,13 @@ public class DiscountCodeController {
 		return "index";
 	}
 
+	@RequestMapping(value = "/lol")
+	public String index3() {
+		return "lol";
+	}
+
 	@RequestMapping(value = "/empl")
-	public DiscountCode empl() throws JsonProcessingException {
+	public DiscountCode empl() throws Exception {
 		DiscountCode code = new DiscountCode();
 		code.setCode("raz123test");
 		repository.save(code);

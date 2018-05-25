@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.eiti.rso.config;
+package pl.eiti.auth.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
