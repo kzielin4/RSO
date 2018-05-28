@@ -15,7 +15,6 @@
  */
 package pl.eiti.rso.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,10 +27,16 @@ import pl.eiti.rso.domain.repositories.DiscountCodeRepository;
 import pl.eiti.rso.domain.repositories.HibernateDaoImpl;
 
 import javax.transaction.Transactional;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 @RestController
 public class DiscountCodeController {
+
+	private final String USER_AGENT = "Mozilla/5.0";
 
 	@Autowired
 	private DiscountCodeRepository repository;
@@ -62,6 +67,28 @@ public class DiscountCodeController {
 	@RequestMapping(value = "/")
 	public String index() {
 		return "index";
+	}
+
+	@RequestMapping(value = "/con")
+	public String con() throws Exception {
+		String url = "http://172.17.0.3:9080/";
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		con.setRequestMethod("GET");
+		con.setRequestProperty("User-Agent", USER_AGENT);
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+		StringBuffer response = new StringBuffer();
+		int responseCode = con.getResponseCode();
+		System.out.println("\nSending 'GET' request to URL : " + url);
+		System.out.println("Response Code : " + responseCode);
+
+		String inputLine;
+		while ((inputLine = in.readLine()) != null)
+			response.append(inputLine);
+		in.close();
+		return response.toString();
 	}
 
 	@RequestMapping(value = "/lol")
