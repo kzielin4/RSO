@@ -7,4 +7,5 @@ import pl.eiti.auth.domain.entity.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
+    public User findByUserNameAndPassword(String username,String password);
 }

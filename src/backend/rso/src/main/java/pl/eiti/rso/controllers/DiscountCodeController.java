@@ -18,6 +18,8 @@ package pl.eiti.rso.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.eiti.rso.domain.entity.Address;
 import pl.eiti.rso.domain.entity.CustomerBusiness;
@@ -69,12 +71,15 @@ public class DiscountCodeController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/con")
-	public String con() throws Exception {
-		String url = "http://172.17.0.3:9080/";
+	@RequestMapping(value = "/autorization", method = RequestMethod.GET)
+	public String autorization(@RequestParam String username,@RequestParam String password) throws Exception {
+		//String url = "http://172.17.0.3:9080/api/autorization";
+		String url = "http://localhost:9080/api/autorization?userName='"+username+"&password="+password;
 		URL obj = new URL(url);
+		String userPassword = "Kamil" + ":" + "Kamil";
+		String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
+		con.setRequestProperty("Authorization", "Basic " + encoding);
 		con.setRequestMethod("GET");
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));

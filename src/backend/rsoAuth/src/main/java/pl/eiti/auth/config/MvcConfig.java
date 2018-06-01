@@ -12,6 +12,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -34,7 +35,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	public DataSource dataSource() {
 	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-	    driverManagerDataSource.setUrl("jdbc:MySql://172.17.0.2:3306/LOGDB");
+	    driverManagerDataSource.setUrl("jdbc:MySql://172.17.0.5:3306/LOGDB");
 	    //driverManagerDataSource.setUrl("jdbc:MySql://192.168.1.20:3306/LOGDB");
 	    driverManagerDataSource.setUsername("root");
 //	    driverManagerDataSource.setPassword("mysecretpass");
@@ -42,13 +43,13 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	    return driverManagerDataSource;
 	    }
     
-//    @Bean
-//	public InternalResourceViewResolver viewResolver() {
-//		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-//		resolver.setPrefix("/WEB-INF/jsp/");
-//		resolver.setSuffix(".jsp");
-//		return resolver;
-//	}
+    @Bean
+	public InternalResourceViewResolver viewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/WEB-INF/jsp/");
+		resolver.setSuffix(".jsp");
+		return resolver;
+	}
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
