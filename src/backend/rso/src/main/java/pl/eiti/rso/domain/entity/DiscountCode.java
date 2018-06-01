@@ -5,7 +5,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "DISCOUNT_CODE")
-public class DiscountCode {
+public class DiscountCode extends BaseEntity {
 
     Long id;
     Date dateFrom;

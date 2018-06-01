@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "PRODUCT")
-public class Product {
+public class Product extends BaseEntity {
     Long id;
     String productType;
     ProductCategory productCategory;
@@ -38,7 +38,7 @@ public class Product {
         this.productType = productType;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "PRODUCT_CATEGORY_ID", referencedColumnName = "ID")
     public ProductCategory getProductCategory() {
         return productCategory;
@@ -103,4 +103,15 @@ public class Product {
         this.isInSpecialOffer = isInSpecialOffer;
         this.name = name;
     }
+
+    public Product(String productType, ProductCategory productCategory, String description, String productNo, BigDecimal productPrice, Boolean isInSpecialOffer, String name) {
+        this.productType = productType;
+        this.productCategory = productCategory;
+        this.description = description;
+        this.productNo = productNo;
+        this.productPrice = productPrice;
+        this.isInSpecialOffer = isInSpecialOffer;
+        this.name = name;
+    }
+
 }

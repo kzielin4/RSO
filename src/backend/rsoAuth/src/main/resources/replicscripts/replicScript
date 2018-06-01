@@ -1,0 +1,24 @@
+#!/bin/bash
+#mysql -h 127.0.0.1 -P 3306
+docker stop masterdb
+docker stop slavedb
+docker rm masterdb
+docker rm slavedb
+rm -r /opt/Docker/masterdb/data /opt/Docker/masterdb/cnf
+sudo rm -r /opt/Docker/slavedb/data/ /opt/Docker/slavedb/cnf
+sudo mkdir -p /opt/Docker/masterdb/data /opt/Docker/slavedb/data
+sudo mkdir -p /opt/Docker/masterdb/cnf /opt/Docker/slavedb/cnf
+sudo cp config-file.cnf /opt/Docker/masterdb/cnf/config-file.cnf
+sudo cp config-fileSlave.cnf /opt/Docker/slavedb/cnf/config-file.cnf
+sudo docker run --name masterdb -v /opt/Docker/masterdb/cnf:/etc/mysql/conf.d -v /opt/Docker/masterdb/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=mysecretpass -d percona:5.6
+sudo docker exec -ti masterdb 'mysql' -uroot -pmysecretpass -vvv -e"GRANT REPLICATION SLAVE ON *.* TO repl@'%' IDENTIFIED BY 'slavepass';" 
+sudo docker exec -ti masterdb 'mysql' -uroot -pmysecretpass -e"SHOW MASTER STATUS;"
+sudo docker run --name slavedb -d -v /opt/Docker/slavedb/cnf:/etc/mysql/conf.d -v /opt/Docker/slavedb/data:/var/lib/mysql --link masterdb:mysql -e MYSQL_ROOT_PASSWORD=mysecretpass -d percona:5.6
+sudo docker exec -ti slavedb 'mysql' -uroot -pmysecretpass -e'change master to master_host="mysql",master_user="repl",master_password="slavepass",master_log_file="mysqld-bin.000004";' -vvv
+sudo docker exec -ti slavedb 'mysql' -uroot -pmysecretpass -e"START SLAVE;" -vvv
+sudo docker exec -ti slavedb 'mysql' -uroot -pmysecretpass -e"SHOW SLAVE STATUS;" -vvv
+sudo docker exec -ti masterdb 'mysql' -uroot -pmysecretpass -e"GRANT ALL ON db.* TO 'root'@'%' IDENTIFIED BY 'rootrootR$1' WITH GRANT OPTION;" -vvv
+sudo docker exec -ti slavedb 'mysql' -uroot -pmysecretpass -e"select * from LOGDB.USERS;" -vvv
+sudo docker exec -ti masterdb 'mysql' -uroot -pmysecretpass -e"insert into  LOGDB.USERS values (1,'Kamil','Kamil', 1);" -vvv
+
+

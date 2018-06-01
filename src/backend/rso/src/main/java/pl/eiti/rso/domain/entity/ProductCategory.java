@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "PRODUCT_CATEGORY")
-public class ProductCategory {
+public class ProductCategory extends BaseEntity {
     Long id;
     String name;
     String description;
@@ -43,6 +43,11 @@ public class ProductCategory {
 
     public ProductCategory(Long id, String name, String description) {
         this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
+    public ProductCategory(String name, String description) {
         this.name = name;
         this.description = description;
     }

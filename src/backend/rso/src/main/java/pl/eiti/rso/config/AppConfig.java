@@ -40,7 +40,7 @@ public class AppConfig {
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:MySql://192.168.1.20:3306/ESHOP");
+        dataSource.setUrl("jdbc:MySql://172.17.0.6/ESHOP");
         //dataSource.setUrl("jdbc:MySql://ip:3306/SURVEYS");
         //dataSource.setUrl("jdbc:MySql://localhost:3306/SURVEYS");
         dataSource.setUsername( "root" );

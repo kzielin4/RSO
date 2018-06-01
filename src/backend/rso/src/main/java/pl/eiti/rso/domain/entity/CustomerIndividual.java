@@ -49,4 +49,21 @@ public class CustomerIndividual extends Customer {
     public void setPesel(String pesel) {
         this.pesel = pesel;
     }
+
+    public CustomerIndividual(Long id, String firstName, String surname, String pesel) {
+        this.id = id;
+        this.firstName = firstName;
+        this.surname = surname;
+        this.pesel = pesel;
+    }
+
+    public CustomerIndividual(String firstName, String surname, String pesel, String email) {
+        this.firstName = firstName;
+        this.surname = surname;
+        this.pesel = pesel;
+        this.email = email;
+    }
+
+    public CustomerIndividual() {
+    }
 }

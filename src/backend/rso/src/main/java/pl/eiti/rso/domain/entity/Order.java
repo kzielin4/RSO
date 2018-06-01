@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "ORDER")
-public class Order {
+public class Order extends BaseEntity {
     Long id;
     Customer customer;
     String orderType;

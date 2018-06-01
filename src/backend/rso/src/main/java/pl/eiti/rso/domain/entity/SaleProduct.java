@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "DELIVERY")
-public class SaleProduct {
+public class SaleProduct extends BaseEntity {
     Long id;
     Product product;
     BigDecimal saleProductPrice;

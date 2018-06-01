@@ -39,4 +39,20 @@ public class CustomerBusiness extends Customer {
     public void setNip(String nip) {
         this.nip = nip;
     }
+
+    public CustomerBusiness(Long id, String companyName, String nip, String email) {
+        this.id = id;
+        this.companyName = companyName;
+        this.nip = nip;
+        this.email = email;
+    }
+
+    public CustomerBusiness(String companyName, String nip, String email) {
+        this.companyName = companyName;
+        this.nip = nip;
+        this.email = email;
+    }
+
+    public CustomerBusiness() {
+    }
 }

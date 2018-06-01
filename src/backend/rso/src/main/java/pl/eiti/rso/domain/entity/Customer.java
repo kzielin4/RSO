@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Table(name = "CUSTOMER")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "CUSTOMER_TYPE", discriminatorType = DiscriminatorType.STRING)
-public abstract class Customer implements Serializable {
+public abstract class Customer extends BaseEntity implements Serializable {
 
     Long id;
     protected Address deliveryAddress;
@@ -31,13 +31,13 @@ public abstract class Customer implements Serializable {
         this.id = id;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_ADDRESS_DELIVERY", referencedColumnName = "ID")
     public Address getDeliveryAddress() {
         return deliveryAddress;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_ADDRESS_INVOICE", referencedColumnName = "ID")
     public Address getInvoiceAddress() {
         return invoiceAddress;

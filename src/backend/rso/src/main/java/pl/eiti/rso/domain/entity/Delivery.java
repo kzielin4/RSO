@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "DELIVERY")
-public class Delivery {
+public class Delivery extends BaseEntity {
     Long id;
     String deliveryType;
     String description;
