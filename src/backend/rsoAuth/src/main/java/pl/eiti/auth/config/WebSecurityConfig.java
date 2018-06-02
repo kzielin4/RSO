@@ -4,15 +4,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebMvcSecurity
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    public WebSecurityConfig() {
+        super(true);
+    }
+
+    @Autowired
+    UserDetailsService userDetailsService;
 
     @Autowired
     DataSource dataSource;
@@ -20,11 +32,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "select username,password, enabled from users where username=?")
-                .authoritiesByUsernameQuery(
-                        "select username, role from user_roles where username=?");
+        auth.userDetailsService(userDetailsService);
+//        auth.jdbcAuthentication().dataSource(dataSource)
+//                .usersByUsernameQuery(
+//                        "select USERNAME, PASSWORD, ENABLE from USERS where USERNAME=?")
+//                .authoritiesByUsernameQuery(
+//                        "select USERNAME, ROLE from USER_ROLES where USERNAME=?");
     }
 
     @Configuration
@@ -32,7 +45,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.csrf().disable().antMatcher("/api").authorizeRequests().anyRequest().fullyAuthenticated().and().httpBasic();
+            http
+                    .csrf().disable()
+                    .anonymous().disable()
+                    .authorizeRequests()
+                    .antMatchers("/oauth/token,/lol").permitAll();
         }
     }
 
@@ -42,11 +59,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
-                    .antMatchers("/hello").access("hasRole('ROLE_ADMIN')")
+                    .antMatchers("/login","/lol").permitAll()
+                    .antMatchers("/hello").fullyAuthenticated()
                     .anyRequest().permitAll()
+                    .antMatchers("/user/**").access("hasRole('ROLE_SERVICE')")
                     .and()
-                    .formLogin().loginPage("/login")
-                    .usernameParameter("username").passwordParameter("password")
+                    .formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password")
                     .and()
                     .logout().logoutSuccessUrl("/login?logout")
                     .and()

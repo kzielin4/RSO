@@ -9,10 +9,13 @@ import pl.eiti.auth.domain.entity.UserRole;
 import pl.eiti.auth.domain.repositories.HibernateDaoImpl;
 import pl.eiti.auth.domain.repositories.UserRepository;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/user")
+@PreAuthorize("hasRole('ROLE_SERVICE')")
 public class OAuthController {
 
     @Autowired
@@ -20,13 +23,20 @@ public class OAuthController {
     @Autowired
     private HibernateDaoImpl hibernateDao;
 
-    @RequestMapping(value = "/")
+
+    @RequestMapping("/user")
+    public Principal user(Principal principal) {
+        return principal;
+    }
+
+    @RequestMapping(value = "/users")
     public String index() {
         List<User> userList = new ArrayList<User>();
         userRepository.findAll().forEach(userList::add);
         return userList.toString();
     }
 
+    @PreAuthorize("hasRole('ROLE_SERVICE')")
     @RequestMapping(value = "/lol")
     public String index3() {
         return "lol";
@@ -35,7 +45,7 @@ public class OAuthController {
     @PreAuthorize("hasRole('ROLE_SERVICE')")
     @RequestMapping(value = "/api/autorization", method = RequestMethod.GET)
     public UserDto autorizationUser(@RequestParam String userName, @RequestParam String password) {
-        User userDb = userRepository.findByUserNameAndPassword(userName,"");
+        User userDb = userRepository.findByUsernameAndPassword(userName,"");
         if(userDb == null){
             return null;
         }

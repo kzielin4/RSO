@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "USER_ROLES")
 public class UserRole {
     Long id;
+    String userName;
     String roleName;
 
     public UserRole() {
@@ -20,6 +21,15 @@ public class UserRole {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Column(name = "USERNAME")
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Column(name = "ROLE")
