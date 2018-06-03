@@ -40,21 +40,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                        "select USERNAME, ROLE from USER_ROLES where USERNAME=?");
     }
 
-    @Configuration
-    @Order(1)
-    public static class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .csrf().disable()
-                    .anonymous().disable()
-                    .authorizeRequests()
-                    .antMatchers("/oauth/token,/lol").permitAll();
-        }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .anonymous().disable()
+                .authorizeRequests()
+                .antMatchers("/oauth/token","/lol").permitAll();
     }
 
+//    @Configuration
+//    @Order(1)
+//    public static class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
+//        @Override
+//        protected void configure(HttpSecurity http) throws Exception {
+//            http
+//                    .csrf().disable()
+//                    .anonymous().disable()
+//                    .authorizeRequests()
+//                    .antMatchers("/oauth/token","/lol").permitAll();
+//        }
+//    }
+
     @Configuration
-    @Order(2)
+    @EnableWebSecurity
+    @Order(1)
     public static class ApiWebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -64,9 +74,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().permitAll()
                     .antMatchers("/user/**").access("hasRole('ROLE_SERVICE')")
                     .and()
-                    .formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password")
+                    .formLogin().loginPage("/login").failureUrl("/403")
                     .and()
                     .logout().logoutSuccessUrl("/login?logout")
+                    .and().httpBasic()
                     .and()
                     .exceptionHandling().accessDeniedPage("/403")
                     .and()

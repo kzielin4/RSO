@@ -1,39 +1,27 @@
-package pl.eiti.auth.domain.entity;
+package pl.eiti.rso.domain.dto;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@Table(name="\"USERS\"")
-public class User implements UserDetails,Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", updatable = false, nullable = false)
+public class User implements UserDetails, Serializable {
     Long id;
-    @Column(name = "USERNAME")
     String username;
-    @Column(name = "PASSWORD")
     String password;
-    @Column(name = "ENABLE")
     Boolean enabled;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
     List<UserRole> userRoles;
 
     public User() {
     }
 
-    public User(UserDto user){
+    public User(UserDto user) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
@@ -77,7 +65,7 @@ public class User implements UserDetails,Serializable {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for (UserRole userRole:userRoles) {
+        for (UserRole userRole : userRoles) {
             authorities.add(new SimpleGrantedAuthority(userRole.getRoleName()));
         }
 
@@ -106,8 +94,8 @@ public class User implements UserDetails,Serializable {
         return enabled;
     }
 
-    public static User fromprinicpal(Principal principal){
-        return (User)((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+    public static User fromprinicpal(Principal principal) {
+        return (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
     }
 
 }

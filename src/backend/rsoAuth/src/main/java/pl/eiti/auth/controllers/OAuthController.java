@@ -2,6 +2,8 @@ package pl.eiti.auth.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import pl.eiti.auth.domain.dto.UserDto;
 import pl.eiti.auth.domain.entity.User;
@@ -15,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-@PreAuthorize("hasRole('ROLE_SERVICE')")
 public class OAuthController {
 
     @Autowired
@@ -23,10 +24,20 @@ public class OAuthController {
     @Autowired
     private HibernateDaoImpl hibernateDao;
 
+    @Autowired
+    UserDetailsService userDetailsService;
 
-    @RequestMapping("/user")
-    public Principal user(Principal principal) {
-        return principal;
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') or hasRole('ROLE_SERVICE')")
+    @RequestMapping("/getOwnPrincipal")
+    public User getOwnPrincipal(@AuthenticationPrincipal Principal user) {
+        return User.fromprinicpal(user);
+    }
+
+    @PreAuthorize("hasRole('ROLE_SERVICE')")
+    @RequestMapping("/userPrinicpal")
+    public UserDto getUserPrinicpal(@RequestParam String username) {
+        User user = (User) userDetailsService.loadUserByUsername(username);
+        return new UserDto(user);
     }
 
     @RequestMapping(value = "/users")
@@ -40,19 +51,6 @@ public class OAuthController {
     @RequestMapping(value = "/lol")
     public String index3() {
         return "lol";
-    }
-
-    @PreAuthorize("hasRole('ROLE_SERVICE')")
-    @RequestMapping(value = "/api/autorization", method = RequestMethod.GET)
-    public UserDto autorizationUser(@RequestParam String userName, @RequestParam String password) {
-        User userDb = userRepository.findByUsernameAndPassword(userName,"");
-        if(userDb == null){
-            return null;
-        }
-        UserDto user = new UserDto(userName,password);
-        List<UserRole> userRoles = userDb.getUserRoles();
-        user.setUserRolesFromDbList(userRoles);
-        return user;
     }
 
     public UserRepository getUserRepository() {

@@ -16,11 +16,13 @@
 package pl.eiti.rso;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
 @EntityScan("pl.eiti.rso.domain")
+@EnableAutoConfiguration
 public class Application {
 
     public static void main(String[] args) {

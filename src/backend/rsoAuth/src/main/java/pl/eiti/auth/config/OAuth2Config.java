@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 
 @Configuration
 @EnableAuthorizationServer
-@EnableWebSecurity
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter{
 
     @Autowired

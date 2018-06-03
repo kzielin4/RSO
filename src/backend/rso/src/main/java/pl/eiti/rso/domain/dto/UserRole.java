@@ -1,11 +1,8 @@
-package pl.eiti.auth.domain.entity;
+package pl.eiti.rso.domain.dto;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "USER_ROLES")
-public class UserRole implements Serializable{
+public class UserRole implements Serializable {
     Long id;
     String userName;
     String roleName;
@@ -13,9 +10,6 @@ public class UserRole implements Serializable{
     public UserRole() {
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", updatable = false, nullable = false)
     public Long getId() {
         return id;
     }
@@ -24,7 +18,6 @@ public class UserRole implements Serializable{
         this.id = id;
     }
 
-    @Column(name = "USERNAME")
     public String getUserName() {
         return userName;
     }
@@ -33,7 +26,6 @@ public class UserRole implements Serializable{
         this.userName = userName;
     }
 
-    @Column(name = "ROLE")
     public String getRoleName() {
         return roleName;
     }

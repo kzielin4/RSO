@@ -1,30 +1,33 @@
 package pl.eiti.rso.domain.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserDto implements Serializable {
+
+    Long id;
     String username;
     String password;
-    List<UserRoleDto> userRoles;
+    Boolean enabled;
+    List<UserRole> userRoles;
 
     public UserDto() {
-        userRoles = new ArrayList<UserRoleDto>();
     }
 
-    public UserDto(String username, String password, List<UserRoleDto> userRoleDtos) {
-        this.username = username;
-        this.password = password;
-        this.userRoles = userRoleDtos;
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.enabled = user.isEnabled();
+        this.userRoles = user.getUserRoles();
     }
 
-    public List<UserRoleDto> getUserRoles() {
-        return userRoles;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserRoles(List<UserRoleDto> userRoleDtos) {
-        this.userRoles = userRoleDtos;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -43,8 +46,19 @@ public class UserDto implements Serializable {
         this.password = password;
     }
 
-    public UserDto(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public List<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 }

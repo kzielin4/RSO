@@ -17,6 +17,7 @@ package pl.eiti.rso.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,7 +75,7 @@ public class DiscountCodeController {
 	@RequestMapping(value = "/autorization", method = RequestMethod.GET)
 	public String autorization(@RequestParam String username,@RequestParam String password) throws Exception {
 		//String url = "http://172.17.0.3:9080/api/autorization";
-		String url = "http://localhost:9080/api/autorization?userName='"+username+"&password="+password;
+		String url = "http://localhost:9080/api/user/user";
 		URL obj = new URL(url);
 		String userPassword = "Kamil" + ":" + "Kamil";
 		String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());
@@ -96,6 +97,7 @@ public class DiscountCodeController {
 		return response.toString();
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/lol")
 	public String index3() {
 		return "lol";
