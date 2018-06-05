@@ -53,7 +53,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	public DataSource dataSource() {
 	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-	    driverManagerDataSource.setUrl("jdbc:MySql://172.17.0.5:3306/LOGDB");
+	    driverManagerDataSource.setUrl("jdbc:MySql://172.17.0.2:3306/LOGDB");
 	    //driverManagerDataSource.setUrl("jdbc:MySql://192.168.1.20:3306/LOGDB");
 	    driverManagerDataSource.setUsername("root");
 //	    driverManagerDataSource.setPassword("mysecretpass");

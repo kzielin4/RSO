@@ -12,6 +12,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import pl.eiti.auth.domain.dto.*;
 
 @Entity
 @Table(name="\"USERS\"")
