@@ -71,6 +71,7 @@ public class UserController {
         customerRepository.deleteAll();
     }
 
+
     @RequestMapping(value = "/getAllCustomers", method = RequestMethod.GET)
     public List<Customer> getAllCustomers() {
         ArrayList<Customer> list = new ArrayList<Customer>();

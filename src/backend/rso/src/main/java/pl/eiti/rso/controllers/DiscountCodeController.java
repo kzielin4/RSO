@@ -67,7 +67,8 @@ public class DiscountCodeController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/checkUser")
 	public String index() {
 		return "index";
 	}
@@ -98,9 +99,9 @@ public class DiscountCodeController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/lol")
+	@RequestMapping(value = "/checkAdmin")
 	public String index3() {
-		return "lol";
+		return "admin";
 	}
 
 	@RequestMapping(value = "/empl")
